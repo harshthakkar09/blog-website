@@ -5,13 +5,13 @@ import (
 	"github.com/harshthakkar09/blog-website/util"
 )
 
-func IsAuthanticate(c *fiber.Ctx) error{
-	cookie:=c.Cookies("jwt")
+func IsAuthanticate(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
 
-	if _,err:=util.ParseJwt(cookie);err!=nil{
+	if _, err := util.ParseJwt(cookie); err != nil {
 		c.Status(fiber.StatusUnauthorized)
 		return c.JSON(fiber.Map{
-			"message":"unauthenticated",
+			"message": "unauthenticated",
 		})
 	}
 	return c.Next()

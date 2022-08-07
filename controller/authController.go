@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt"
 	"github.com/harshthakkar09/blog-website/database"
 	"github.com/harshthakkar09/blog-website/models"
 	"github.com/harshthakkar09/blog-website/util"
@@ -106,3 +107,7 @@ func Login(c *fiber.Ctx) error {
 		"user":    user,
 	})
 }
+
+type Claims struct{
+	jwt.StandardClaims
+} 
