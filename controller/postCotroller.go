@@ -43,3 +43,12 @@ func AllPosts(c *fiber.Ctx) error {
 		},
 	})
 }
+
+func DetailPost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	var blogpost models.Blog
+	database.DB.Where("id=?", id).Preload("User").First(&blogpost)
+	return c.JSON(fiber.Map{
+		"data": blogpost,
+	})
+}

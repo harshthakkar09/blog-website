@@ -13,4 +13,5 @@ func Setup(app *fiber.App) {
 	app.Use(middleware.IsAuthanticate)
 	app.Post("/api/post", controller.CreatePost)
 	app.Get("/api/allpost", controller.AllPosts)
+	app.Get("/api/allpost/:id", controller.DetailPost)
 }
