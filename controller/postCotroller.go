@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"strconv"
@@ -8,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/harshthakkar09/blog-website/database"
 	"github.com/harshthakkar09/blog-website/models"
+	"gorm.io/gorm"
 )
 
 func CreatePost(c *fiber.Ctx) error {
@@ -66,3 +68,21 @@ func UpdatePost(c *fiber.Ctx) error {
 		"message": "post update scuccessfully",
 	})
 }
+
+func DeletePost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	blog := models.Blog{
+		Id: uint(id),
+	}
+	deleteQuery := database.DB.Delete(&blog)
+	if errors.Is(deleteQuery.Error, gorm.ErrRecordNotFound) {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "Oops, record not found",
+		})
+	}
+	return c.JSON(fiber.Map{
+		"message": "post deleted successfully",
+	})
+}
+
